@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  redis:
+    image: library/redis:6.2-alpine
+    ports:
+    - 6379:6379
+    volumes:
+    - ./redis_data:/data
+    restart: always
+
+  gomars:
+    build:
+      context: .
+    image: gomars:1.0.1
+    container_name: gomars
+    ports:
+    - 8088:8088
+    depends_on:
+      - redis
+    restart: always
